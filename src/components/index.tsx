@@ -1,12 +1,20 @@
-// import * as React from 'react'
-// import * as ReactDOM from 'react-dom'
-// import { createStore } from 'redux'
-// import reducer from './reducers'
-// import 'todomvc-app-css/index.css'
-// // import App from './containers/App'
-// import { Provider } from 'react-redux'
+import  React from 'react'
+import  ReactDOM from 'react-dom'
+import { createStore } from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension';
+import reducer from './../reducers'
+import {Provider} from 'react-redux'
+import { App } from "./App";
 
-// const store = createStore(reducer)
+// STORE
+const store = createStore(reducer, composeWithDevTools())
+
+store.subscribe(() => {
+  console.log(store.getState())
+})
+
+// DISPATCH
+// store.dispatch(getRuns())
 
 // ReactDOM.render(
 //   <Provider store={store}>
@@ -14,11 +22,10 @@
 //   </Provider>,
 //   document.getElementById('root')
 // )
-import React from 'react'
-import * as ReactDOM from "react-dom";
-import { App } from "./App";
 
 ReactDOM.render(
-  <App userName="Beveloper" lang="TypeScript" />,
+  <Provider store={store}>
+    <App userName="Beveloper" lang="TypeScript" />
+  </Provider>,
   document.getElementById("main")
 );

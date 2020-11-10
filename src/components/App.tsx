@@ -1,6 +1,6 @@
 import React from 'react'
 import './styles/App.scss';
-import Scene from "./Scene";
+import RunList from "./RunList";
 
 export interface HelloWorldProps {
   userName: string;
@@ -9,6 +9,6 @@ export interface HelloWorldProps {
 
 export const App = (props: HelloWorldProps) => (
     <div className="container container__app">
-        <Scene />
+        <RunList />
     </div>
 );
