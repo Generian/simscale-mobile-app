@@ -11,6 +11,6 @@
     },
     "include": [
         // "./src/**/*", "webpack.config.js"
-        "src/components/index.tsx"
+        "src/index.tsx"
     ]
 }
