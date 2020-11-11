@@ -1,4 +1,4 @@
-import getRunsReducer from './getRunsReducer'
+import getRunsReducer from './getRunsSlice'
 
 import {combineReducers} from 'redux'
 
