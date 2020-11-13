@@ -1,16 +1,27 @@
 {
     "compilerOptions": {
-        "outDir": "./dist/",            // path to output directory
-        "sourceMap": true,              // allow sourcemap support (for debugging)
-        "noImplicitAny": true,          // strict type checking
-        "module": "commonjs",           // specify module code generation
+        "outDir": "./dist/",
+        "sourceMap": true,
+        "lib": ["es6", "dom"],
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "strictNullChecks": true,
+        "module": "commonjs",
         "target": "es5",
         "esModuleInterop": true,
-		"moduleResolution": "node",     // specify ECMAScript target version
-        "jsx": "react"                  // use typescript to transpile jsx to js
+		"moduleResolution": "node",
+        "jsx": "react",
+        "typeRoots": [ 
+            "./typings", 
+            "./node_modules/@types"
+        ]
     },
     "include": [
         // "./src/**/*", "webpack.config.js"
         "src/index.tsx"
+    ],
+    "exclude": [
+        "./node_modules",
+        "./typings"
     ]
 }

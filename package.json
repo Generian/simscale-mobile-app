@@ -2,7 +2,7 @@
   "name": "simscale-mobile-app",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.tsx",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --open",
@@ -20,6 +20,7 @@
     "css-loader": "^5.0.1",
     "html-webpack-plugin": "^4.5.0",
     "mini-css-extract-plugin": "^1.2.1",
+    "react-window": "^1.8.6",
     "redux-thunk": "^2.3.0",
     "sass": "^1.29.0",
     "sass-loader": "^10.0.5",
@@ -31,6 +32,9 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
+    "@types/react-window": "^1.8.2",
     "node-sass": "^5.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
