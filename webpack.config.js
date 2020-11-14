@@ -8,6 +8,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "build"),
     filename: "bundle.js",
+    publicPath: '/',
   },
   resolve: {
     extensions: [".js", ".jsx", ".json", ".ts", ".tsx"],
@@ -33,6 +34,10 @@ module.exports = {
           // Compiles Sass to CSS
           'sass-loader',
         ],
+      },
+      {
+        test: /\.svg$/,
+        use: ['@svgr/webpack', 'url-loader'],
       },
     ],
   },

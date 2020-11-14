@@ -15,6 +15,8 @@ export interface Run {
   status: string; 
   progress: number; 
   simulationId: string; 
+  simulationName: string;
+  simulationType: string;
   projectId: string; 
   projectName: string; 
 }
@@ -26,6 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     heading: {
       fontSize: theme.typography.pxToRem(15),
+      "font-weight": 500,
     },
     secondaryHeading: {
       fontSize: theme.typography.pxToRem(15),
@@ -53,6 +56,16 @@ const useStyles = makeStyles((theme: Theme) =>
         textDecoration: 'underline',
       },
     },
+    breadcrumb : {
+      'max-width': '30vw',
+      'font-size': 'smaller',
+      overflow: 'hidden',
+      'text-overflow': 'ellipsis',
+      'white-space': 'nowrap',
+    },
+    runProgress: {
+      'margin-right': '16px',
+    },
   }),
 );
 
@@ -66,7 +79,15 @@ export const RunList = () => {
   return (
     <div className={classes.root}>
       {runs.map((run: Run) => {
-        return RunListItem(classes, run.runName, run.simulationId, run.projectName, run.runId)
+        return RunListItem(
+          classes, 
+          run.runName, 
+          run.simulationName, 
+          run.projectName, 
+          run.runId,
+          run.progress,
+          run.simulationType,
+        )
       })}
     </div>
   );

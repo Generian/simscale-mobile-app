@@ -49,10 +49,6 @@ const composedEnhancer = composeWithDevTools(applyMiddleware(thunkMiddleware))
 // STORE
 const store = createStore(reducer, {}, composedEnhancer)
 
-store.subscribe(() => {
-  console.log(store.getState())
-})
-
 // fetchStuff()
 
 export default store

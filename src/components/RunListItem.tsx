@@ -1,5 +1,4 @@
 import React from 'react'
-import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -10,7 +9,10 @@ import AccordionActions from '@material-ui/core/AccordionActions';
 import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgressWithLabel from './RunProgress';
+import { Breadcrumbs } from '@material-ui/core';
+import './../styles/App.scss'
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 
 
@@ -20,8 +22,9 @@ const RunListItem = (
     simulationName: string = '',
     projectName: string = '',
     runId: string,
+    progress: number,
+    simulationType: string,
     disabled: boolean = false,
-
 ) => {
   return (
     <Accordion {...disabled ? 'disabled' : ''} >
@@ -30,8 +33,19 @@ const RunListItem = (
         aria-controls="panel1a-content"
         id={runId}
       >
-        <CircularProgress variant="static" value={73}/>
-        <Typography className={classes.heading}>{runName}</Typography>
+        <div className={classes.runProgress}>
+          <CircularProgressWithLabel value={progress*100}/>
+        </div>
+        <div className="stacked">
+          <div className="inline">
+            <Typography className={classes.heading}>{runName}</Typography>
+            <Chip size="small" label={simulationType.replace(/_/g, " ").toLowerCase()} className="chip"/>
+          </div>
+          <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
+            <Typography color="textSecondary" className={classes.breadcrumb}>{projectName}</Typography>
+            <Typography color="textSecondary" className={classes.breadcrumb}>{simulationName}</Typography>
+          </Breadcrumbs>
+        </div>
       </AccordionSummary>
       <AccordionDetails className={classes.details}>
         <div className={classes.column} />
