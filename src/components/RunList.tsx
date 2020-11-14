@@ -2,24 +2,9 @@ import React from 'react'
 import {useSelector} from 'react-redux'
 import {RootState} from '../reducers';
 import {Theme, createStyles, makeStyles} from '@material-ui/core/styles';
-import RunListItem from './RunListItem'
+import RunListItem, { Run } from './RunListItem'
 
-export interface Run { 
-  runId: string; 
-  runName: string; 
-  runCreatedAt: any; 
-  runStartedAt: any; 
-  runFinishedAt: any; 
-  duration: any; 
-  computeResource: any; 
-  status: string; 
-  progress: number; 
-  simulationId: string; 
-  simulationName: string;
-  simulationType: string;
-  projectId: string; 
-  projectName: string; 
-}
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -57,14 +42,18 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     breadcrumb : {
-      'max-width': '30vw',
-      'font-size': 'smaller',
+      'max-width': '28vw',
+      'font-size': 'x-small',
       overflow: 'hidden',
       'text-overflow': 'ellipsis',
       'white-space': 'nowrap',
     },
     runProgress: {
       'margin-right': '16px',
+    },
+    actions: {
+      'justify-content': 'space-between',
+      'padding-right': '16px',
     },
   }),
 );
@@ -80,13 +69,8 @@ export const RunList = () => {
     <div className={classes.root}>
       {runs.map((run: Run) => {
         return RunListItem(
-          classes, 
-          run.runName, 
-          run.simulationName, 
-          run.projectName, 
-          run.runId,
-          run.progress,
-          run.simulationType,
+          run,
+          classes
         )
       })}
     </div>

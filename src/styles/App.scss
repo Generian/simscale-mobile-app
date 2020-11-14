@@ -45,3 +45,15 @@ $font-stack:    Helvetica, sans-serif;
   font-size: smaller;
   text-transform: capitalize;
 }
+
+.finished div{
+  color: green
+}
+
+.cancelled div {
+  color: orange
+}
+
+.error div {
+  color: red
+}

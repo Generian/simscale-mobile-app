@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import './../styles/App.scss'
-import RunList, { Run } from "./RunList"
+import RunList from "./RunList"
 import ButtonAppBar from './AppBar'
 import LinearIndeterminate from './LoadingBar'
-import axios from 'axios';
+import axios from 'axios'
 import api_config, { base_url } from './../api_config'
 import { FETCH_RUNS } from '../reducers/getRunsSlice'
 import { LOADING } from '../reducers/loadingSlice'
+import { Run } from './RunListItem'
 
-axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
-axios.defaults.headers.common["Access-Control-Allow-Methods"] = "GET, PUT, POST, DELETE, OPTIONS";
-axios.defaults.headers.common["Content-Type"] = "application/json";
+// axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+// axios.defaults.headers.common["Access-Control-Allow-Methods"] = "GET, PUT, POST, DELETE, OPTIONS";
+// axios.defaults.headers.common["Content-Type"] = "application/json";
 
 
 export const App = () => {

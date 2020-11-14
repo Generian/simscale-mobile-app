@@ -13,37 +13,97 @@ import CircularProgressWithLabel from './RunProgress';
 import { Breadcrumbs } from '@material-ui/core';
 import './../styles/App.scss'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import StopIcon from '@material-ui/icons/Stop';
+import DeleteIcon from '@material-ui/icons/Delete';
+import PlayArrowRoundedIcon from '@material-ui/icons/PlayArrowRounded';
+import api_config, { base_url } from '../api_config';
+import axios from 'axios'
+import IconButton from '@material-ui/core/IconButton';
 
 
+// axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+// axios.defaults.headers.common["Access-Control-Allow-Methods"] = "GET, PUT, POST, DELETE, OPTIONS";
+// axios.defaults.headers.common["Content-Type"] = "application/json";
+
+
+export interface Run { 
+  runId: string; 
+  runName: string; 
+  runCreatedAt: any; 
+  runStartedAt: any; 
+  runFinishedAt: any; 
+  duration: any; 
+  computeResource: any; 
+  status: string; 
+  progress: number; 
+  simulationId: string; 
+  simulationName: string;
+  simulationType: string;
+  projectId: string; 
+  projectName: string; 
+}
 
 const RunListItem = (
+    run: Run,
     classes: any,
-    runName: string = '',
-    simulationName: string = '',
-    projectName: string = '',
-    runId: string,
-    progress: number,
-    simulationType: string,
-    disabled: boolean = false,
 ) => {
+  const r = run
+  const isRunning = run.status == "RUNNING" || run.status == "QUEUED"
+  const disabled: boolean = false
+
+  const CancelRun = () => {
+    axios.post(`${base_url}/projects/${r.projectId}/simulations/${r.simulationId}/runs/${r.runId}/cancel`, api_config)
+      .then((res: any) => {
+        console.log(res)
+      })
+  }
+
+  let primaryButton = <Button
+    variant="contained"
+    color="secondary"
+    size="small"
+    className={classes.button}
+    startIcon={<StopIcon />}
+    onClick={CancelRun}
+  >
+    Cancel Run
+  </Button>
+
+  if (!isRunning) {
+    primaryButton = <Button
+      variant="contained"
+      color="primary"
+      size="small"
+      disabled
+      className={classes.button}
+      startIcon={<PlayArrowRoundedIcon />}
+    >
+      Continue Run
+    </Button>
+  }
+
+  let deleteButton = <IconButton aria-label="delete" disabled color="primary">
+      <DeleteIcon />
+    </IconButton>
+
   return (
     <Accordion {...disabled ? 'disabled' : ''} >
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"
-        id={runId}
+        id={run.runId}
       >
         <div className={classes.runProgress}>
-          <CircularProgressWithLabel value={progress*100}/>
+          <CircularProgressWithLabel value={run.progress*100} status={run.status}/>
         </div>
         <div className="stacked">
           <div className="inline">
-            <Typography className={classes.heading}>{runName}</Typography>
-            <Chip size="small" label={simulationType.replace(/_/g, " ").toLowerCase()} className="chip"/>
+            <Typography className={classes.heading}>{run.runName}</Typography>
+            <Chip size="small" label={run.simulationType.replace(/_/g, " ").toLowerCase()} className="chip"/>
           </div>
           <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
-            <Typography color="textSecondary" className={classes.breadcrumb}>{projectName}</Typography>
-            <Typography color="textSecondary" className={classes.breadcrumb}>{simulationName}</Typography>
+            <Typography color="textSecondary" className={classes.breadcrumb}>{run.projectName}</Typography>
+            <Typography color="textSecondary" className={classes.breadcrumb}>{run.simulationName}</Typography>
           </Breadcrumbs>
         </div>
       </AccordionSummary>
@@ -63,11 +123,9 @@ const RunListItem = (
         </div>
       </AccordionDetails>
       <Divider />
-      <AccordionActions>
-        <Button size="small">Cancel</Button>
-        <Button size="small" color="primary">
-          Save
-        </Button>
+      <AccordionActions className={classes.actions}>
+        {deleteButton}
+        {primaryButton}
       </AccordionActions>
     </Accordion>
   );
