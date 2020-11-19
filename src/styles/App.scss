@@ -10,8 +10,9 @@ $font-stack:    Helvetica, sans-serif;
 }
 
 .container__app {
-    background-color: #0076a8;
+    background-color: #fafafa;
     height: 100%;
+    overflow-x: hidden;
 }
 
 .container__list {
@@ -19,8 +20,8 @@ $font-stack:    Helvetica, sans-serif;
 }
 
 .container__loading {
-  position: absolute;
-  top: 56px;
+  height: 4px;
+  width: 100%;
 }
 
 .logo {
@@ -37,13 +38,51 @@ $font-stack:    Helvetica, sans-serif;
   overflow: hidden;
 }
 
-.chip {
+.chipHeader {
   margin-left: 16px;
+  text-transform: capitalize;
+}
+
+.chip {
+  margin-bottom: 8px;
 }
 
 .chip span {
   font-size: smaller;
+  font-weight: 500;
   text-transform: capitalize;
+}
+
+.chip.FINISHED {
+  background-color: green;
+}
+
+.chip.FINISHED span {
+  color: rgb(37, 13, 13);
+}
+
+.chip.ERROR {
+  background-color: red;
+}
+
+.chip.CANCELED span {
+  color: rgb(39, 30, 14);
+}
+
+.chip.CANCELED {
+  background-color: orange;
+}
+
+.chip.QUEUED span, .chip.RUNNING span {
+  color: rgb(190, 190, 224);
+}
+
+.chip.QUEUED, .chip.RUNNING {
+  background-color: blue;
+}
+
+.chip.ERROR span {
+  color: #0f290f;
 }
 
 .finished div{
@@ -56,4 +95,112 @@ $font-stack:    Helvetica, sans-serif;
 
 .error div {
   color: red
+}
+
+.title {
+  
+}
+
+.item {
+  font-weight: 500;
+}
+
+.detailsContainer {
+  width: 100%;
+  display: grid;
+  overflow: hidden;
+  grid-template-columns: 153px auto;
+  grid-template-rows: auto;
+  grid-template-areas: 
+    "timeline summary"
+    "plots plots"  
+  ;
+}
+
+.detailsContainer > div {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.timelineContainer {
+  grid-area: timeline;
+}
+
+.summaryContainer {
+  grid-area: summary;
+  display: flex!important;
+  padding-left: 16px;
+  border-left: 2px solid #f3f3f3;
+}
+
+.summaryContainer p {
+  margin: 0;
+  margin-bottom: 8px;
+}
+
+.chartContainer {
+  width: 100%;
+  grid-area: plots;
+  grid-row: 2;
+  display: grid;
+  place-items: center;
+}
+
+.timelineContainer p {
+  font-size: 0.75rem;
+}
+
+.timelineContainer li:last-of-type span:last-of-type {
+  display: none;
+}
+
+.timelineContainer span:first-of-type {
+  padding: 2px;
+}
+
+.timelineContainer span:last-of-type {
+  width: 1px;
+}
+
+.timelineContainer ul {
+  padding-left: 0px;
+}
+
+.timelineContainer li:first-of-type div:first-of-type {
+  padding-left: 0px;
+}
+
+.timelineContainer li:last-of-type div:first-of-type {
+  padding-left: 0px;
+}
+
+.timelineContainer li:nth-child(2) div:last-of-type {
+  padding-left: 0px;
+}
+
+.plot {
+  width: 100%;
+}
+
+#chart {
+  height: 250px;
+}
+
+.selectBoxes {
+  display: grid;
+  grid-template-columns: auto auto;
+  padding-top: 12px;
+}
+
+.selectBoxes div {
+  font-size: small;
+}
+
+.menuItem {
+  font-size: small!important;
+  line-height: 2!important;
+  min-height: 0!important;
 }

@@ -25,7 +25,7 @@ export default function FallbackAvatars() {
 
   return (
     <div className={classes.root}>
-      <Avatar alt="Remy Sharp" src="/broken-image.jpg" className={classes.orange} />
+      <Avatar alt="Sebastian Günther" src="https://www.simscale.com/forum/user_avatar/www.simscale.com/pi3141/120/35383_2.png.test" className={classes.orange} />
     </div>
   );
 }

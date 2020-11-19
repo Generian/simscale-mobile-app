@@ -2,53 +2,60 @@ import { createStore, applyMiddleware } from 'redux'
 import reducer from './reducers'
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunkMiddleware from 'redux-thunk'
-import axios from 'axios'
+import { Run } from './components/RunListItem';
 
 // DEFAULT STATE
-interface defaultStateInterface {
-  runs: any[]
+interface defaultState {
+  runs: Run[],
+  loading: boolean,
 }
 
-// const createRun = (
-//   runName: string, 
-//   simulationName: string, 
-//   projectName: string, 
-//   status: string,
-//   progress: Float32Array,
-//   ) => {
-//   return {
-//     "runName": runName,
-//     "simulationName": simulationName,
-//     "projectName": projectName,
-//     "status": status,
-//     "progress": progress,
+// Default plot
+const defaultPlot1 = {
+  type: "DOMAIN",
+  category: "CONVERGENCE_PLOT",
+  url: "https://www.simscale.com/",
+}
 
-//   }
-// }
+const defaultPlot2 = {
+  type: "FIELD",
+  category: "CONVERGENCE_PLOT",
+  url: "https://www.simscale.com/",
+}
 
-// let r = []
-// for (let i=1; i<10; i++) {
-//   r.push(createRun(`run ${i}`, `sim ${i}`, `proj ${i}`))
-// }
+// Default run
+const defaultRun: Run = {
+  runId: "0123456789",
+  runName: "Placeholder",
+  runCreatedAt: "2020-01-01T00:00:00Z",
+  runStartedAt: "2020-01-01T00:00:00Z", 
+  runFinishedAt: "2020-01-01T00:00:00Z", 
+  duration: 13100, 
+  computeResource: { 
+    type: "CPU_HOURS",
+    value: 10.12234
+  }, 
+  status: "ERROR",
+  progress: 1, 
+  simulationId: "0123456789", 
+  simulationName: "Placeholder",
+  simulationType: "STATIC_ANALYSIS",
+  projectId: "0123456789", 
+  projectName: "Some very very long project name project name", 
+  plots: [defaultPlot1, defaultPlot2],
+}
 
-// export const defaultState: defaultStateInterface = {
-//   runs: r,
-// }
-
-// const fetchStuff = async () => {
-//   const res = await axios.get(`http://jsonplaceholder.typicode.com/users`)
-//   store.dispatch({
-//     type: 'GET_USERS',
-//     payload: res.data
-//   })
-// }
+const defaultState: defaultState = {
+  runs: [
+    defaultRun,
+  ],
+  loading: true
+}
 
 // MIDDLEWARE
 const composedEnhancer = composeWithDevTools(applyMiddleware(thunkMiddleware))
 
 // STORE
-const store = createStore(reducer, {}, composedEnhancer)
-
-// fetchStuff()
+const store = createStore(reducer, defaultState, composedEnhancer)
 
 export default store

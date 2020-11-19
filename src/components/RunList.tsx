@@ -30,6 +30,9 @@ const useStyles = makeStyles((theme: Theme) =>
     column: {
       flexBasis: '33.33%',
     },
+    columnWide: {
+      flexBasis: '66.67%',
+    },
     helper: {
       borderLeft: `2px solid ${theme.palette.divider}`,
       padding: theme.spacing(1, 2),
@@ -65,9 +68,21 @@ export const RunList = () => {
   // Define style classes
   const classes = useStyles();
 
+  const sortRuns = (a:Run, b:Run) => {
+    if ( a.runCreatedAt < b.runCreatedAt ){
+      return 1;
+    }
+    if ( a.runCreatedAt > b.runCreatedAt ){
+      return -1;
+    }
+    return 0;
+  }
+  
+  const runsSorted = runs.sort( sortRuns );
+
   return (
     <div className={classes.root}>
-      {runs.map((run: Run) => {
+      {runsSorted.map((run: Run) => {
         return RunListItem(
           run,
           classes
