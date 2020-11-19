@@ -38,8 +38,14 @@ const RunListItem = (
     run: Run,
     classes: any,
 ) => {
+
+  let charts = null
+  if (run.plots.length > 0) {
+    charts = <ChartContainer plots={run.plots}/>
+  }
+
   return (
-    <Accordion >
+    <Accordion key={run.runId}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"
@@ -63,7 +69,7 @@ const RunListItem = (
         <div className="detailsContainer">
           <RunTimeline run={run}/>
           <RunSummary run={run}/>
-          <ChartContainer plots={run.plots}/>
+          {charts}
         </div>
       </AccordionDetails>
       <Divider />

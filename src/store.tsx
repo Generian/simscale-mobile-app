@@ -56,6 +56,6 @@ const defaultState: defaultState = {
 const composedEnhancer = composeWithDevTools(applyMiddleware(thunkMiddleware))
 
 // STORE
-const store = createStore(reducer, defaultState, composedEnhancer)
+const store = createStore(reducer, {}, composedEnhancer)
 
 export default store

@@ -1,5 +1,4 @@
 import { createStyles, FormControl, InputLabel, makeStyles, MenuItem, Select, Theme } from "@material-ui/core"
-import Paper from "@material-ui/core/Paper/Paper"
 import React, { useEffect, useState } from "react"
 import Plot from './Chart'
 import axios from 'axios'
@@ -16,10 +15,10 @@ const generateData = (start: number, end: number, step: number, m: string) => {
     return data
 }
 
-const searchUrl = (type: string, array: Plot[]) => {
+const searchUrl = (category: string, array: Plot[]) => {
     let url = ""
     for (let i=0; i< array.length; i++) {
-        if (array[i].type === type) {
+        if (array[i].category === category) {
             url = array[i].url as string 
         }
     }
@@ -52,70 +51,83 @@ const DEFAULT_DATA: PlotData = {}
 const DEFAULT_PLOT: JSX.Element = <></>
 
 const ChartContainer = (props: ChartContainerProps) => {
+    let isMounted: boolean = false
 
-    const [typeList, setTypeList] = useState(DEFAULT_LIST)
-    const [type, setType] = useState(EMPTY_STRING)
+    const [categoryList, setCategoryList] = useState(DEFAULT_LIST)
+    const [category, setCategory] = useState(EMPTY_STRING)
     const [fieldList, setFieldList] = useState(DEFAULT_LIST)
     const [field, setField] = useState(EMPTY_STRING)
     const [data, setData] = useState(DEFAULT_DATA)
     const [plot, setPlot] = useState(DEFAULT_PLOT)
 
-    const getData = async (url: string) => {
-        const d: PlotData = {
-            Placeholder: generateData(1, 10, 1, "cos"),
-            Placeholder2: generateData(1, 1000, 1, "sin"),
-        }
+    const getData = (url: string) => {
+        // const d: PlotData = {
+        //     Placeholder: generateData(1, 10, 1, "cos"),
+        //     Placeholder2: generateData(1, 1000, 1, "sin"),
+        // }
 
-        const fl = ["Placeholder", "Placeholder2"]
-        setData(d)
-        setFieldList(fl)
-        setField(fl[0])
-        const p: JSX.Element | null = <Plot data={d[fl[0]]}/>
-        setPlot(p)
+        // const fl = ["Placeholder", "Placeholder2"]
+        // setData(d)
+        // setFieldList(fl)
+        // setField(fl[0])
+        // const p: JSX.Element | null = <Plot data={d[fl[0]]}/>
+        // setPlot(p)
 
-        // axios.get(url, api_config)
-        //     .then((plot: any) => {
-        //     let data: PlotData = {}
+        axios.get(url, api_config)
+            .then((plot: any) => {
+                // Empty object to get final plot data pushed into it
+                let data: PlotData = {}
+                console.log("fetched data from: ", url)
+                
 
-        //     const d = Papa.parse(plot.data)
-        //     const d_clean: any[] = d.data
+                const d = Papa.parse(plot.data)
+                const d_clean: any[] = d.data
+                console.log(d_clean)
 
-        //     const dimensions: any[] = d_clean[0]
+                const dimensions: string[] = d_clean[0]
+                // Remove Time (s)
+                dimensions.shift()
 
-        //     dimensions.forEach((dim, i) => {
-        //         if (dim != "Time (s)") {
-        //         data[dim] = []
-        //         d_clean.forEach((line, j) => {
-        //             if (j > 0) {
-        //             data[dim].push({
-        //                 value: line[i],
-        //                 argument: line[0],
-        //             })
-        //             }
-        //         })
+                dimensions.forEach((dim, i) => {
+                    // Create one object per field
+                    data[dim] = []
+                    d_clean.forEach((line, j) => {
+                        if (j > 0 && line.length > 1) {
+                            data[dim].push({
+                                argument: line[0],
+                                value: line[i+1],
+                            })
+                        }
+                    })
 
-        //         }
-        //     })
+                })
 
-        //     setData(data)
-        //     setFields(dimensions)
-        //     setField(dimensions[0])
-        //     plot = <Plot data={data[dimensions[0]]}/>
-        //     })
-        //     .catch((err) => {
-        //         console.log(err)
-        //     })
+                if (isMounted) {
+                    console.log(data)
+                    setData(data)
+                    setFieldList(dimensions)
+                    setField(dimensions[0])
+                    const p: JSX.Element | null = <Plot data={data[dimensions[0]]}/>
+                    setPlot(p)
+                }
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+
+        return () => { isMounted = false }
     }
 
     useEffect(() => {
-        let plotTypes: string[] = []
+        isMounted = true
+        let plotCategories: string[] = []
         props.plots.forEach((plot) => {
-            plotTypes.push(plot.type)
+            plotCategories.push(plot.category)
         })
     
-        setTypeList(plotTypes)
-        setType(plotTypes[0])
-        getData(searchUrl(plotTypes[0], props.plots))
+        setCategoryList(plotCategories)
+        setCategory(plotCategories[0])
+        getData(searchUrl(plotCategories[0], props.plots))
     
 
     }, [])
@@ -134,10 +146,11 @@ const ChartContainer = (props: ChartContainerProps) => {
 
     const classes = useStyles();
 
-    const handleTypeChange = (event: React.ChangeEvent<{ value: string }>) => {
+    const handleCategoryChange = (event: React.ChangeEvent<{ value: string }>) => {
         const t = event.target.value as string
         const url = searchUrl(t, props.plots)
-        setType(t)
+        setCategory(t)
+        isMounted = true
         getData(url)
     }
 
@@ -152,22 +165,22 @@ const ChartContainer = (props: ChartContainerProps) => {
         <div className="chartContainer">
             <div className="plot">
                 <div className="selectBoxes">
-                    <FormControl className={classes.formControl}>
-                        <InputLabel id="demo-simple-select-label">Type</InputLabel>
+                    <FormControl key="categories" className={classes.formControl}>
+                        <InputLabel id="demo-simple-select-label">Category</InputLabel>
                         <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={type}
-                            onChange={handleTypeChange}
+                            value={category}
+                            onChange={handleCategoryChange}
                         >
-                            {typeList.map((type) => {
+                            {categoryList.map((category) => {
                                 return (
-                                    <MenuItem className="menuItem" value={type}>{type}</MenuItem>
+                                    <MenuItem key={category} className="menuItem" value={category}>{category.replace(/_/g, " ").toLowerCase()}</MenuItem>
                                 )
                             })}
                         </Select>
                     </FormControl>
-                    <FormControl className={classes.formControl}>
+                    <FormControl key="fields" className={classes.formControl}>
                         <InputLabel id="demo-simple-select-label">Field</InputLabel>
                         <Select
                             labelId="demo-simple-select-label"
@@ -177,7 +190,7 @@ const ChartContainer = (props: ChartContainerProps) => {
                         >
                             {fieldList.map((field) => {
                                 return (
-                                    <MenuItem className="menuItem" value={field}>{field}</MenuItem>
+                                    <MenuItem key={field} className="menuItem" value={field}>{field}</MenuItem>
                                 )
                             })}
                         </Select>

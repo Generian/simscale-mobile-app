@@ -3,7 +3,7 @@ import {
   ArgumentAxis,
   ValueAxis,
   Chart,
-  SplineSeries,
+  SplineSeries
 } from '@devexpress/dx-react-chart-material-ui';
 import { PlotDataPoint } from './ChartContainer';
 
@@ -14,6 +14,7 @@ export interface ChartProps {
 const Plot = (props: ChartProps) => {
 
   console.log("render plot")
+  console.log(props.data)
 
   return (
     <div>
@@ -21,6 +22,7 @@ const Plot = (props: ChartProps) => {
         <ArgumentAxis />
         <ValueAxis />
         <SplineSeries
+          name="spline"
           valueField="value"
           argumentField="argument"
         />

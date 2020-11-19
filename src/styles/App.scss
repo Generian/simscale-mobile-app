@@ -203,4 +203,9 @@ $font-stack:    Helvetica, sans-serif;
   font-size: small!important;
   line-height: 2!important;
   min-height: 0!important;
+  text-transform: capitalize;
+}
+
+#demo-simple-select {
+  text-transform: capitalize;
 }
