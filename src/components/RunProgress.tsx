@@ -30,6 +30,10 @@ export default function CircularProgressWithLabel(props: CircularProgressProps &
       indicator = <CloseRoundedIcon />
       color = "error"
       break
+    case "FAILED":
+      indicator = <CloseRoundedIcon />
+      color = "error"
+      break
   }
 
   return (

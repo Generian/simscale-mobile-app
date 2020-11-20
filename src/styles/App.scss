@@ -15,11 +15,22 @@ $font-stack:    Helvetica, sans-serif;
     overflow-x: hidden;
 }
 
+.container__header {
+  position: absolute;
+  top: 0px;
+  z-index: 10;
+}
+
 .container__list {
   margin-top: 16px;
+  position: relative;
+  top: 56px;
 }
 
 .container__loading {
+  position: absolute;
+  top: 56px;
+  z-index: 5;
   height: 4px;
   width: 100%;
 }
@@ -61,7 +72,7 @@ $font-stack:    Helvetica, sans-serif;
   color: rgb(37, 13, 13);
 }
 
-.chip.ERROR {
+.chip.FAILED {
   background-color: red;
 }
 
@@ -118,7 +129,8 @@ $font-stack:    Helvetica, sans-serif;
 }
 
 .detailsContainer > div {
-  width: 100%;
+  width: auto;
+  min-width: 110px;
   height: 100%;
   display: grid;
   place-items: center;
@@ -172,7 +184,7 @@ $font-stack:    Helvetica, sans-serif;
 }
 
 .dotRunning {
-  background-color: #222;
+  background-color: blue;
   animation-name: color;
   animation-duration: 2s;
   animation-iteration-count: infinite;
@@ -180,21 +192,18 @@ $font-stack:    Helvetica, sans-serif;
 
 @keyframes color {
   0% {
-    background-color: #222;
+    background-color: blue;
   }
   50% {
-    background-color: #4285f4;
+    background-color: rgb(119, 119, 255);
   }
   100% {
-    background-color: #222;
+    background-color: blue;
   }
 }
 
 .dotPending {
   background-color: #e0e0e0;
-  animation-name: color;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
 }
 
 .line {
@@ -363,4 +372,22 @@ $font-stack:    Helvetica, sans-serif;
 
 .breadcrumbs svg {
   font-size: small;
+}
+
+header {
+  color: #fff!important;
+  background-color: #0076a8!important;
+}
+
+button.MuiButton-containedSecondary:enabled {
+  color: #fff;
+  background-color: orange!important;
+}
+
+div.makeStyles-actions-18 {
+  padding-right: 8px;
+}
+
+div.MuiInput-underline:after {
+  border-bottom: 2px solid #0076a8!important;
 }

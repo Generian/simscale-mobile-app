@@ -2,6 +2,7 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import { Run } from './RunListItem';
 import './../styles/App.scss'
+import LinearBuffer from './ProgressVertical'
 
 const addLeadingZero = (i: number) => {
     let s = ""
@@ -91,7 +92,7 @@ const RunTimeline = (props: RunTimelineProps) => {
     if (isStarted) {
         if (isFinished) {
             switch (props.run.status) {
-                case "ERROR":
+                case "FAILED":
                     startedLineStyling = "lineError"
                     finishedDotStyling = "dotError"
                     finishedLabel = "Error"

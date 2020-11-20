@@ -6,6 +6,8 @@ import {Run} from './RunListItem'
 import StopIcon from '@material-ui/icons/Stop';
 import PlayArrowRoundedIcon from '@material-ui/icons/PlayArrowRounded';
 import DeleteIcon from '@material-ui/icons/Delete';
+import API_KEY from "./../api_key"
+import LoadingButton from './LoadingButton'
 
 export interface RunFooterProps {
     classes: any,
@@ -16,35 +18,18 @@ const RunFooter = (props: RunFooterProps) => {
     
     const isRunning = props.run.status == "RUNNING" || props.run.status == "QUEUED"
 
-    const CancelRun = () => {
-        axios.post(`${base_url}/projects/${props.run.projectId}/simulations/${props.run.simulationId}/runs/${props.run.runId}/cancel`, api_config)
-          .then((res: any) => {
-            console.log(res)
-          })
-    }
-
     let primaryButton = <Button
         variant="contained"
-        color="secondary"
-        size="small"
-        className={props.classes.button}
-        startIcon={<StopIcon />}
-        onClick={CancelRun}
-    >
-        Cancel Run
-    </Button>
-
-    if (!isRunning) {
-        primaryButton = <Button
-        variant="contained"
         color="primary"
-        size="small"
         disabled
         className={props.classes.button}
         startIcon={<PlayArrowRoundedIcon />}
         >
         Continue Run
-        </Button>
+    </Button>
+
+    if (isRunning) {
+        primaryButton = <LoadingButton run={props.run}/>
     }
 
     let deleteButton = <IconButton aria-label="delete" disabled color="primary">

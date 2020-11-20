@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
@@ -15,6 +15,12 @@ import RunTimeline from './Timeline'
 import ChartContainer from './ChartContainer'
 import RunFooter from './RunFooter'
 import RunSummary from './RunSummary'
+import LinearBuffer from './ProgressVertical';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios'
+import api_config, { base_url } from './../api_config'
+import { UPDATE_RUNS } from '../reducers/getRunsSlice';
+import { RootState } from '../reducers';
 
 export interface Run { 
   runId: string; 
@@ -38,7 +44,6 @@ const RunListItem = (
     run: Run,
     classes: any,
 ) => {
-
   let charts = null
   if (run.plots.length > 0) {
     charts = <ChartContainer plots={run.plots}/>
@@ -67,6 +72,7 @@ const RunListItem = (
           <RunTimeline run={run}/>
           <RunSummary run={run}/>
           {charts}
+          <LinearBuffer />
         </div>
       </AccordionDetails>
       <Divider />
