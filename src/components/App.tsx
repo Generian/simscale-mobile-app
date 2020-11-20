@@ -11,56 +11,50 @@ import { LOADING } from '../reducers/loadingSlice'
 import { Run } from './RunListItem'
 import { RootState } from '../reducers'
 
-// axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
-// axios.defaults.headers.common["Access-Control-Allow-Methods"] = "GET, PUT, POST, DELETE, OPTIONS";
-// axios.defaults.headers.common["Content-Type"] = "application/json";
-
-
 export const App = () => {
   const dispatch = useDispatch();
 
-  // const replaceRun = (updatedRun: Run, oldRunsArray: Run[]) => {
-  //   let newRunsArray = oldRunsArray
-  //   for (var i=0; i < oldRunsArray.length; i++) {
-  //       if (oldRunsArray[i].runId === updatedRun.runId) {
-  //         newRunsArray[i] = updatedRun
-  //       }
-  //   }
-  //   return newRunsArray
-  // }
+  const replaceRun = (updatedRun: Run, oldRunsArray: Run[]) => {
+    let newRunsArray = oldRunsArray
+    for (var i=0; i < oldRunsArray.length; i++) {
+        if (oldRunsArray[i].runId === updatedRun.runId) {
+          newRunsArray[i] = updatedRun
+        }
+    }
+    return newRunsArray
+  }
 
-  // const fetchRunUpdate = () => {
-  //   const url_run = `${base_url}/projects/${run.projectId}/simulations/${run.simulationId}/runs/${run.runId}`
-  //   axios.get(url_run, api_config)
-  //     .then((res_run: any) => {
+  const fetchRunUpdate = (run: Run, runs: Run[]) => {
+    const url_run = `${base_url}/projects/${run.projectId}/simulations/${run.simulationId}/runs/${run.runId}`
+    axios.get(url_run, api_config)
+      .then((res_run: any) => {
 
-  //       let r = {
-  //         runId: run.runId,
-  //         runName: res_run.name,
-  //         runCreatedAt: res_run.createdAt,
-  //         runStartedAt: res_run.startedAt,
-  //         runFinishedAt: res_run.finishedAt,
-  //         duration: res_run.duration,
-  //         computeResource: res_run.computeResource,
-  //         status: res_run.status,
-  //         progress: res_run.progress,
-  //         simulationId: run.simulationId,
-  //         simulationName: run.simulationName,
-  //         simulationType: run.simulationType,
-  //         projectId: run.projectId,
-  //         projectName: run.projectName,
-  //         plots: run.plots,
-  //       }
-  //       dispatch({type: UPDATE_RUNS, payload: replaceRun(r, runs)})
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     })
-  // }
+        let r = {
+          runId: run.runId,
+          runName: res_run.name,
+          runCreatedAt: res_run.createdAt,
+          runStartedAt: res_run.startedAt,
+          runFinishedAt: res_run.finishedAt,
+          duration: res_run.duration,
+          computeResource: res_run.computeResource,
+          status: res_run.status,
+          progress: res_run.progress,
+          simulationId: run.simulationId,
+          simulationName: run.simulationName,
+          simulationType: run.simulationType,
+          projectId: run.projectId,
+          projectName: run.projectName,
+          plots: run.plots,
+        }
+        dispatch({type: UPDATE_RUNS, payload: replaceRun(r, runs)})
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 
-  // const isRunning = run.status == "RUNNING" || run.status == "QUEUED"
+  // const runsState: Run[] = useSelector((state: RootState) => state.runs)
 
-  
   useEffect(() => {
     // Get runs
     dispatch({type: LOADING, payload: true})
@@ -154,11 +148,15 @@ export const App = () => {
       console.log(err)
     })
 
+    // Update periodically
     // const interval = setInterval(() => {
-    //     if (isRunning) {
-    //       const runsState: Run[] = useSelector((state: RootState) => state.runs);
-    //       fetchRunUpdate()
+    //   // 
+    //   runsState.forEach((r: Run) => {
+    //     const isRunning = r.status == "RUNNING" || r.status == "QUEUED"
+    //     if (isRunning) { 
+    //       fetchRunUpdate(r, runsState)
     //     }
+    //   })
     // }, 5000);
     // return () => clearInterval(interval);
 

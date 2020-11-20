@@ -44,6 +44,59 @@ const RunListItem = (
     run: Run,
     classes: any,
 ) => {
+  // const dispatch = useDispatch()
+  // const runs: Run[] = useSelector((state: RootState) => state.runs);
+
+  // const replaceRun = (updatedRun: Run, oldRunsArray: Run[]) => {
+  //   let newRunsArray = oldRunsArray
+  //   for (var i=0; i < oldRunsArray.length; i++) {
+  //       if (oldRunsArray[i].runId === updatedRun.runId) {
+  //         newRunsArray[i] = updatedRun
+  //       }
+  //   }
+  //   return newRunsArray
+  // }
+
+  // const fetchRunUpdate = () => {
+  //   const url_run = `${base_url}/projects/${run.projectId}/simulations/${run.simulationId}/runs/${run.runId}`
+  //   axios.get(url_run, api_config)
+  //     .then((res_run: any) => {
+
+  //       let r = {
+  //         runId: run.runId,
+  //         runName: res_run.name,
+  //         runCreatedAt: res_run.createdAt,
+  //         runStartedAt: res_run.startedAt,
+  //         runFinishedAt: res_run.finishedAt,
+  //         duration: res_run.duration,
+  //         computeResource: res_run.computeResource,
+  //         status: res_run.status,
+  //         progress: res_run.progress,
+  //         simulationId: run.simulationId,
+  //         simulationName: run.simulationName,
+  //         simulationType: run.simulationType,
+  //         projectId: run.projectId,
+  //         projectName: run.projectName,
+  //         plots: run.plots,
+  //       }
+  //       dispatch({type: UPDATE_RUNS, payload: replaceRun(r, runs)})
+  //     })
+  //     .catch((err) => {
+  //       console.log(err)
+  //     })
+  // }
+
+  // const isRunning = run.status == "RUNNING" || run.status == "QUEUED"
+
+  // useEffect(() => {
+  //     const interval = setInterval(() => {
+  //         if (isRunning) {
+  //           fetchRunUpdate()
+  //         }
+  //     }, 5000);
+  //     return () => clearInterval(interval);
+  // }, [runs]);
+
   let charts = null
   if (run.plots.length > 0) {
     charts = <ChartContainer plots={run.plots}/>
