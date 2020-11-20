@@ -8,7 +8,7 @@ import AccordionActions from '@material-ui/core/AccordionActions';
 import Chip from '@material-ui/core/Chip';
 import Divider from '@material-ui/core/Divider';
 import CircularProgressWithLabel from './RunProgress';
-import { Breadcrumbs } from '@material-ui/core';
+import Breadcrumbs from './Breadcrumbs';
 import './../styles/App.scss'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import RunTimeline from './Timeline'
@@ -59,10 +59,7 @@ const RunListItem = (
             <Typography className={classes.heading}>{run.runName}</Typography>
             <Chip size="small" label={run.simulationType.replace(/_/g, " ").toLowerCase()} className="chipHeader"/>
           </div>
-          <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
-            <Typography color="textSecondary" className={classes.breadcrumb}>{run.projectName}</Typography>
-            <Typography color="textSecondary" className={classes.breadcrumb}>{run.simulationName}</Typography>
-          </Breadcrumbs>
+          <Breadcrumbs run={run}/>
         </div>
       </AccordionSummary>
       <AccordionDetails className={classes.details}>

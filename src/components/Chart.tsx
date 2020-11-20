@@ -11,11 +11,18 @@ export interface ChartProps {
   data: PlotDataPoint[],
 }
 
+
+// Default plot //TODO: Remove default plot
+// const generateData = (start: number, end: number, step: number, m: string) => {
+//   const data: PlotDataPoint[] = []
+//   for (let i = start; i < end; i += step) {
+//       const v = m == "cos" ? Math.cos(i) : Math.sin(i)
+//       data.push({ value: v / i, argument: i })
+//   }
+//   return data
+// }
+
 const Plot = (props: ChartProps) => {
-
-  console.log("render plot")
-  console.log(props.data)
-
   return (
     <div>
       <Chart data={props.data} height={250}>
@@ -23,6 +30,7 @@ const Plot = (props: ChartProps) => {
         <ValueAxis />
         <SplineSeries
           name="spline"
+          color="#0076a8"
           valueField="value"
           argumentField="argument"
         />

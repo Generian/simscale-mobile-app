@@ -109,7 +109,7 @@ $font-stack:    Helvetica, sans-serif;
   width: 100%;
   display: grid;
   overflow: hidden;
-  grid-template-columns: 153px auto;
+  grid-template-columns: auto auto;
   grid-template-rows: auto;
   grid-template-areas: 
     "timeline summary"
@@ -127,6 +127,143 @@ $font-stack:    Helvetica, sans-serif;
 
 .timelineContainer {
   grid-area: timeline;
+}
+
+.timeline {
+  grid-area: timeline;
+  width: 100%;
+  overflow: hidden;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: 36px auto 36px auto 36px;
+  grid-template-areas: 
+    "createdLabel createdNode createdTime"
+    ". createdLine ."
+    "startedLabel startedNode startedTime"
+    ". startedLine ." 
+    "finishedLabel finishedNode finishedTime"
+  ;
+  padding-right: 16px;
+}
+
+.time {
+  font-size: 0.6rem!important;
+}
+
+.timeline p {
+  font-size: 0.75rem;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+}
+
+.dotSuccess {
+  background-color: green!important;
+}
+
+.dotError {
+  background-color: red!important;
+}
+
+.dotCanceled {
+  background-color: orange!important;
+}
+
+.dotRunning {
+  background-color: #222;
+  animation-name: color;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes color {
+  0% {
+    background-color: #222;
+  }
+  50% {
+    background-color: #4285f4;
+  }
+  100% {
+    background-color: #222;
+  }
+}
+
+.dotPending {
+  background-color: #e0e0e0;
+  animation-name: color;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+.line {
+  width: 0px;
+  height: 100%;
+}
+
+.lineSuccess {
+  border-left: 2px solid green;
+}
+
+.linePending {
+  border-left: 2px solid #e0e0e0;
+}
+
+.lineError {
+  border-left: 2px solid red;
+}
+
+.lineCanceled {
+  border-left: 2px solid orange;
+}
+
+.lineRunning {
+  border-left: 2px dashed blue;
+}
+
+.finishedTime {
+  grid-area: finishedTime;
+}
+
+.finishedNode {
+  grid-area: finishedNode;
+}
+
+.finishedLabel {
+  grid-area: finishedLabel;
+}
+
+.startedTime {
+  grid-area: startedTime;
+}
+
+.startedNode {
+  grid-area: startedNode;
+}
+
+.startedLabel {
+  grid-area: startedLabel;
+}
+
+.startedLine {
+  grid-area: startedLine;
+}
+
+.createdTime {
+  grid-area: createdTime;
+}
+
+.createdNode {
+  grid-area: createdNode;
+}
+
+.createdLabel {
+  grid-area: createdLabel;
+}
+
+.createdLine {
+  grid-area: createdLine;
 }
 
 .summaryContainer {
@@ -208,4 +345,22 @@ $font-stack:    Helvetica, sans-serif;
 
 #demo-simple-select {
   text-transform: capitalize;
+}
+
+.breadcrumbs {
+  display: grid;
+  grid-template-columns: auto 20px auto;
+  place-items: center;
+  margin-top: 2px;
+}
+
+.breadcrumbs p {
+  font-size: x-small;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.breadcrumbs svg {
+  font-size: small;
 }

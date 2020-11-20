@@ -5,16 +5,6 @@ import axios from 'axios'
 import Papa from 'papaparse'
 import api_config from './../api_config'
 
-// Default plot //TODO: Remove default plot
-const generateData = (start: number, end: number, step: number, m: string) => {
-    const data: PlotDataPoint[] = []
-    for (let i = start; i < end; i += step) {
-        const v = m == "cos" ? Math.cos(i) : Math.sin(i)
-        data.push({ value: v / i, argument: i })
-    }
-    return data
-}
-
 const searchUrl = (category: string, array: Plot[]) => {
     let url = ""
     for (let i=0; i< array.length; i++) {
@@ -77,12 +67,9 @@ const ChartContainer = (props: ChartContainerProps) => {
             .then((plot: any) => {
                 // Empty object to get final plot data pushed into it
                 let data: PlotData = {}
-                console.log("fetched data from: ", url)
-                
 
                 const d = Papa.parse(plot.data)
                 const d_clean: any[] = d.data
-                console.log(d_clean)
 
                 const dimensions: string[] = d_clean[0]
                 // Remove Time (s)
@@ -94,8 +81,8 @@ const ChartContainer = (props: ChartContainerProps) => {
                     d_clean.forEach((line, j) => {
                         if (j > 0 && line.length > 1) {
                             data[dim].push({
-                                argument: line[0],
-                                value: line[i+1],
+                                argument: Number(line[0]),
+                                value: Number(line[i+1]),
                             })
                         }
                     })
@@ -103,7 +90,6 @@ const ChartContainer = (props: ChartContainerProps) => {
                 })
 
                 if (isMounted) {
-                    console.log(data)
                     setData(data)
                     setFieldList(dimensions)
                     setField(dimensions[0])
